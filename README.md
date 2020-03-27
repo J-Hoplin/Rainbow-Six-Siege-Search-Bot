@@ -22,4 +22,4 @@ Discord Bot : Rainbow Six Siege player information search bot
     
       - Search your stats about your use of operators
       
-       ![img](https://scontent-ssn1-1.xx.fbcdn.net/v/t1.0-9/91259220_1163275777348987_3081381315367403520_n.jpg?_nc_cat=102&_nc_sid=8024bb&_nc_ohc=pm-FCudu4MIAX-BIxck&_nc_ht=scontent-ssn1-1.xx&oh=0808daffa9017032c8f1312f7b2344ca&oe=5EA249C8)
+       ![img](https://scontent-ssn1-1.xx.fbcdn.net/v/t1.0-9/90988350_1164018177274747_6098653054066753536_n.jpg?_nc_cat=103&_nc_sid=8024bb&_nc_ohc=hczVCxcq3b0AX8Hzq2d&_nc_ht=scontent-ssn1-1.xx&oh=bdbd90cd1658e2a04bf09c1bfc205527&oe=5EA46B55)
