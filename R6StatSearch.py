@@ -12,6 +12,7 @@ from urllib.parse import quote
 import re # Regex for youtube link
 import warnings
 import requests
+import unicodedata
 
 operatoriconURLDict = dict()
 
@@ -42,6 +43,10 @@ def deleteTags(htmls):
     for a in range(len(htmls)):
         htmls[a] = re.sub('<.+?>','',str(htmls[a]),0).strip()
     return htmls
+
+#Strip accents in english : Like a in jäger
+def convertToNormalEnglish(text):
+    return ''.join(char for char in unicodedata.normalize('NFKD', text) if unicodedata.category(char) != 'Mn')
 
 #r6stats 서버에서 크롤링을 막은듯하다
 r6URL = "https://r6stats.com"
@@ -333,11 +338,7 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                         for b in op:
                             statlist.append(b.text)
                         if indNumS == 0:
-                            mostOperator = statlist[0].lower()
-                            if mostOperator == "jäger":
-                                mostOperator = 'jager'
-                            else:
-                                pass
+                            mostOperator = convertToNormalEnglish(statlist[0].lower())
                         embed.add_field(name="Operator Name", value=statlist[0], inline=True)
                         embed.add_field(name="Kills / Deaths", value=statlist[1] + "K / " + statlist[2] + "D",
                                         inline=True)
