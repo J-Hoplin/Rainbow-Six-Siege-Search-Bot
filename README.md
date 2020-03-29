@@ -9,6 +9,10 @@ Discord Bot : Rainbow Six Siege player information search bot
 
 4 . Warning  : This Application is only available for PC version users. Think i'm not gonna support ps4,xbox version
 ***
+  - Patch Note 20200329
+    
+    - Add Function : Convert to Normal English which has accents
+***
 
   - There are two function related to rainbow six siege stat search.
   
