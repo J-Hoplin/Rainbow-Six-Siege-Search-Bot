@@ -12,6 +12,10 @@ Discord Bot : Rainbow Six Siege player information search bot
   - Patch Note 20200329
     
     - Add Function : Convert to Normal English which has accents
+   
+  - Patch Note 20200402
+  
+    - Bug Fix
 ***
 
   - There are two function related to rainbow six siege stat search.
