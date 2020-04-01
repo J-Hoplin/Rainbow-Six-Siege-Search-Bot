@@ -284,7 +284,7 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                     for b in op:
                         statlist.append(b.text)
                     if indNumS == 0:
-                        mostOperator = statlist[0].lower()
+                        mostOperator = convertToNormalEnglish(statlist[0].lower())
                     embed.add_field(name="Operator Name", value=statlist[0], inline=True)
                     embed.add_field(name="Kills / Deaths", value=statlist[1] + "K / " + statlist[2] + "D", inline=True)
                     embed.add_field(name="Wins / Losses", value=statlist[4] + "W / " + statlist[5] + "L", inline=True)
