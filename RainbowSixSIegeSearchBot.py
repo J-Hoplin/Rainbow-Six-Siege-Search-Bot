@@ -36,6 +36,7 @@ for ind in range(0,len(operatorListDiv)):
     operatoriconURL = bs2.find('div',{'class' : "operator__header__icons__names"}).img['src']
     operatoriconURLDict[operatorname] = operatoriconURL
 
+
 token = ''
 
 client = discord.Client() # Create Instance of Client. This Client is discord server's connection to Discord Room
@@ -71,7 +72,6 @@ async def on_message(message): # on_message() event : when the bot has recieved 
         # Get player nickname and parse page
         playerNickname = ''.join((message.content).split(' ')[1:])
         html = requests.get(playerSite + playerNickname + '/pc/').text
-        print(playerSite + playerNickname + '/pc/')
         bs = BeautifulSoup(html, 'html.parser')
 
         # 한번에 검색 안되는 경우에는 해당 반환 리스트의 길이 존재. -> bs.find('div',{'class' : 'results'}
@@ -100,7 +100,6 @@ async def on_message(message): # on_message() event : when the bot has recieved 
 
             # Command entered well
             else:
-
                 # r6stats profile image
                 r6Profile = bs.find('div', {'class': 'main-logo'}).img['src']
 
@@ -122,8 +121,8 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                 OperationName = latestSeason.find('div', {'class': 'meta-wrapper'}).find('div', {
                     'class': 'operation-title'}).text.strip()
                 # latest season Ranking
-                latestSeasonRanking = latestSeason.find('div', {'class': 'rankings-wrapper'}).find('span',
-                                                                                                   {'class': 'ranking'})
+                latestSeasonRanking = latestSeason.find('div', {'class': 'rankings-wrapper'}).find('span', {
+                    'class': 'ranking'})
 
                 # if player not ranked, span has class not ranked if ranked span get class ranking
                 if latestSeasonRanking == None:
@@ -131,12 +130,40 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                 else:
                     latestSeasonRanking = latestSeasonRanking.text
 
+                # Add player's MMR Rank MMR Information
+                playerInfoMenus = bs.find('a', {'class': 'player-tabs__season_stats'})['href']
+                mmrMenu = r6URL + playerInfoMenus
+                html = requests.get(mmrMenu).text
+                bs = BeautifulSoup(html, 'html.parser')
+
+                # recent season rank box
+                # Rank show in purpose : America - Europe - Asia. This code only support Asia server's MMR
+                getElements = bs.find('div', {'class': 'card__content'})  # first elements with class 'card__contet is latest season content box
+
+                for ckAsia in getElements.findAll('div', {'class': 'season-stat--region'}):
+                    checkRegion = ckAsia.find('div',{'class' : 'season-stat--region-title'}).text
+                    if checkRegion == "Asia":
+                        getElements = ckAsia
+                        break
+                    else:
+                        pass
+
+                # MMR Datas Info -> [Win,Losses,Abandon,Max,W/L,MMR]
+                mmrDatas = []
+                for dt in getElements.findAll('span', {'class': 'season-stat--region-stats__stat'}):
+                    mmrDatas.append(dt.text)
+
                 embed = discord.Embed(title="Rainbow Six Siege player search from r6stats", description="",
                                       color=0x5CD1E5)
                 embed.add_field(name="Player search from r6stats", value=playerSite + playerNickname + '/pc/',
                                 inline=False)
-                embed.add_field(name="Operation : " + OperationName,
-                                value="Tier : " + lastestSeasonRankTier + " / " + "Ranking : #" + latestSeasonRanking + " / " + "Level : " + playerLevel,
+                embed.add_field(name="Player's basic information",
+                                value="Ranking : #" + latestSeasonRanking + " | " + "Level : " + playerLevel,
+                                inline=False)
+                embed.add_field(name="Latest season information | Operation : " + OperationName,
+                                value=
+                                "Tier : " + lastestSeasonRankTier + " | W/L : " + mmrDatas[0] + "/" + mmrDatas[
+                                    1] + " | " + "MMR : " + mmrDatas[-1] + "(Asia Server)",
                                 inline=False)
 
                 embed.add_field(name="Total Play Time", value=RankStats[0], inline=True)
@@ -166,7 +193,7 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                 html = requests.get(searchLink).text
                 bs = BeautifulSoup(html, 'html.parser')
                 # Get latest season's Rank information
-                latestSeason = bs.find('div', {'class': re.compile('season\-rank operation\_[A-Za-z_]*')})
+                latestSeason = bs.findAll('div', {'class': re.compile('season\-rank operation\_[A-Za-z_]*')})[0]
 
                 # if player nickname not entered
                 if len(message.content.split(" ")) == 1:
@@ -219,12 +246,37 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                     else:
                         latestSeasonRanking = latestSeasonRanking.text
 
+                    #Add player's MMR Rank MMR Information
+                    playerInfoMenus = bs.find('a', {'class' : 'player-tabs__season_stats'})['href']
+                    mmrMenu = r6URL + playerInfoMenus
+                    html = requests.get(mmrMenu).text
+                    bs = BeautifulSoup(html, 'html.parser')
+
+                    #recent season rank box
+                    # Rank show in purpose : America - Europe - Asia. This code only support Asia server's MMR
+                    getElements = bs.find('div', {'class': 'card__content'})  # first elements with class 'card__contet is latest season content box
+
+                    for ckAsia in getElements.findAll('div', {'class': 'season-stat--region'}):
+                        checkRegion = ckAsia.find('div', {'class': 'season-stat--region-title'}).text
+                        if checkRegion == "Asia":
+                            getElements = ckAsia
+                            break
+                        else:
+                            pass
+
+                    # MMR Datas Info -> [Win,Losses,Abandon,Max,W/L,MMR]
+                    mmrDatas = []
+                    for dt in getElements.findAll('span', {'class': 'season-stat--region-stats__stat'}):
+                        mmrDatas.append(dt.text)
+
                     embed = discord.Embed(title="Rainbow Six Siege player search from r6stats", description="",
                                           color=0x5CD1E5)
                     embed.add_field(name="Player search from r6stats", value=searchLink,
                                     inline=False)
-                    embed.add_field(name="Operation : " + OperationName,
-                                    value="Tier : " + lastestSeasonRankTier + " / " + "Ranking : #" + latestSeasonRanking + " / " + "Level : " + playerLevel,
+                    embed.add_field(name="Player's basic information",value= "Ranking : #" + latestSeasonRanking + " | " + "Level : " + playerLevel,inline=False)
+                    embed.add_field(name="Latest season information | Operation : " + OperationName,
+                                    value=
+                                    "Tier : " + lastestSeasonRankTier + " | W/L : " + mmrDatas[0] + "/"+mmrDatas[1] + " | " + "MMR : " + mmrDatas[-1] +"(Asia Server)",
                                     inline=False)
 
                     embed.add_field(name="Total Play Time", value=RankStats[0], inline=True)
