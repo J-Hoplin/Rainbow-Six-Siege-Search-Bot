@@ -16,6 +16,10 @@ Discord Bot : Rainbow Six Siege player information search bot
   - Patch Note 20200402
   
     - Bug Fix
+  
+  - Patch Note 20200405
+  
+    - Add Latest Season MMR View
 ***
 
   - There are two function related to rainbow six siege stat search.
