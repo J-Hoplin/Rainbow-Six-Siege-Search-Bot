@@ -23,6 +23,14 @@ Discord Bot : Rainbow Six Siege player information search bot
   - Patch Note 20200405
   
     - Add Latest Season MMR View
+  
+  - Patch Note 20200504
+
+    - Until now you can only view best tier of rank in all three servers. This means, you can't view real-time tier.
+
+    - In this patch note, now you can view your real time Asia server rank tier. 
+
+    - MMR View and Tier view about America and Europe server will be patch later.
 ***
 
   - There are two function related to rainbow six siege stat search.
@@ -32,9 +40,12 @@ Discord Bot : Rainbow Six Siege player information search bot
       - Search your R6 Rank informatier, Level, Tier
       
       ![img](1.PNG)
+
+      ![img](2.PNG)
     
     2 . Search by operators : !레식오퍼 (nickname)
     
       - Search your stats about your use of operators
       
-       ![img](2.jpg)
+       ![img](3.jpg)
+      

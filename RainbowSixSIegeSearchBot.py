@@ -13,6 +13,7 @@ import re # Regex for youtube link
 import warnings
 import requests
 import unicodedata
+from tqdm import tqdm
 
 operatoriconURLDict = dict()
 
@@ -24,9 +25,8 @@ bs = BeautifulSoup(html,'html.parser')
 
 #Get oprators' pages with ccid
 operatorListDiv = bs.findAll('div',{'ccid' : re.compile('[0-9A-Za-z]*')})
-print(len(operatorListDiv))
-for ind in range(0,len(operatorListDiv)):
-    print(ind + 1)
+print("Initiating Rainbow Six Siege Operators' Information....")
+for ind in tqdm(range(0,len(operatorListDiv))):
     operatormainURL = operatorListDiv[ind].a['href']
     #Get Operator's name
     operatorname = operatormainURL.split('/')[-1]
@@ -148,6 +148,8 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                     else:
                         pass
 
+                # Player's Tier Information
+                latestSeasonTier = getElements.find('img')['alt']
                 # MMR Datas Info -> [Win,Losses,Abandon,Max,W/L,MMR]
                 mmrDatas = []
                 for dt in getElements.findAll('span', {'class': 'season-stat--region-stats__stat'}):
@@ -162,8 +164,8 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                                 inline=False)
                 embed.add_field(name="Latest season information | Operation : " + OperationName,
                                 value=
-                                "Tier : " + lastestSeasonRankTier + " | W/L : " + mmrDatas[0] + "/" + mmrDatas[
-                                    1] + " | " + "MMR : " + mmrDatas[-1] + "(Asia Server)",
+                                "Tier(Asia) : " + latestSeasonTier + " | W/L : " + mmrDatas[0] + "/" + mmrDatas[
+                                    1] + " | " + "MMR(Asia) : " + mmrDatas[-1],
                                 inline=False)
 
                 embed.add_field(name="Total Play Time", value=RankStats[0], inline=True)
@@ -263,7 +265,8 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                             break
                         else:
                             pass
-
+                    # Player's Tier Information
+                    latestSeasonTier = getElements.find('img')['alt']
                     # MMR Datas Info -> [Win,Losses,Abandon,Max,W/L,MMR]
                     mmrDatas = []
                     for dt in getElements.findAll('span', {'class': 'season-stat--region-stats__stat'}):
@@ -276,7 +279,7 @@ async def on_message(message): # on_message() event : when the bot has recieved 
                     embed.add_field(name="Player's basic information",value= "Ranking : #" + latestSeasonRanking + " | " + "Level : " + playerLevel,inline=False)
                     embed.add_field(name="Latest season information | Operation : " + OperationName,
                                     value=
-                                    "Tier : " + lastestSeasonRankTier + " | W/L : " + mmrDatas[0] + "/"+mmrDatas[1] + " | " + "MMR : " + mmrDatas[-1] +"(Asia Server)",
+                                    "Tier(Asia) : " + latestSeasonTier + " | W/L : " + mmrDatas[0] + "/"+mmrDatas[1] + " | " + "MMR(Asia) : " + mmrDatas[-1],
                                     inline=False)
 
                     embed.add_field(name="Total Play Time", value=RankStats[0], inline=True)
