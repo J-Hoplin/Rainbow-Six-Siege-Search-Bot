@@ -12,6 +12,13 @@ Discord Bot : Rainbow Six Siege player information search bot
 
 4 . Warning  : This Application is only available for PC version users. Think i'm not gonna support ps4,xbox version
 ***
+
+- 정기점검 일표 
+
+    - 20200629 정기점검 완료 : 상태 : Good 비고 : r6stats 가 사이트를 옮기려는것같음. 웹사이트 구조가 변경된다면 그에 대한 대응을 해야될것 같음...
+
+***
+
   - Patch Note 20200329
     
     - Add Function : Convert to Normal English which has accents
